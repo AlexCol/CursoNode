@@ -24,3 +24,4 @@
 
 
 ///pra baixar as dependencias
+npm install
