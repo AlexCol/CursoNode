@@ -1,0 +1,26 @@
+/*
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ iniciando projeto
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+//!Em computadores ainda sem Typescript instalado, pode-se instalar globalmente.
+//npm install typescript -g
+//npm install -g ts-node
+
+//!para inciar e criar a package.json (-y para não precisar responder questões e ele criar padrão)
+//npm init -y 
+
+//!para criar o tsconfig.json e iniciar o 'typescript'
+//npx tsc --init
+
+//No arquivo package
+    "build": "tsc",
+    "start": "ts-node src/index.ts" (ou "start": "node dist/index.js" se quiser executar os js)
+//No arquivo tsconfig:
+    "outDir": "./dist",
+    "rootDir": "./src",
+
+
+
+
+///pra baixar as dependencias
