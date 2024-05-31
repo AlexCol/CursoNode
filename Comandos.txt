@@ -20,11 +20,15 @@
     "outDir": "./dist",
     "rootDir": "./src",
 
-
+//pra usar core moduloes do node com typescript
+npm i --save-dev @types/node
 
 
 ///pra baixar as dependencias
 npm install
 
 
+npm init -y 
+npx tsc --init
 
+"dev": "ts-node src/index.ts"
