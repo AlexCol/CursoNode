@@ -1,0 +1,17 @@
+//pro typescript entender os core modules do node
+npm i --save-dev @types/node
+
+//pacote para facilitar a leitura de argumentos passados pela linha de comando
+npm install minimist
+npm install --save-dev @types/minimist
+
+deve ter um -- antes dos argumentos, e cada nome de argumento deve ter outro --
+ex: npm run dev -- --name=John --age=30 --verbose
+
+//chalk (versão 5 não funciona com typescript por algum motivo)
+npm install chalk@4.1.2
+npm install --save-dev @types/chalk
+
+//
+npm install inquirer@8.2.6 (versão 9 não funciona com typescript por algum motivo --mesmo problema do chalk)
+npm install --save-dev @types/inquirer

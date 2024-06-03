@@ -1,5 +1,5 @@
 {
-  "name": "03_lerargumentos",
+  "name": "06_inputdados2",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,11 +10,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "@types/minimist": "^1.2.5",
-    "@types/node": "^20.12.13"
-  },
   "dependencies": {
-    "minimist": "^1.2.8"
+    "inquirer": "^8.2.6"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7"
   }
 }
