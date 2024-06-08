@@ -6,6 +6,7 @@
 //!Em computadores ainda sem Typescript instalado, pode-se instalar globalmente.
 //npm install typescript -g
 //npm install -g ts-node
+//npm install -g ts-node-dev
 
 //!para inciar e criar a package.json (-y para não precisar responder questões e ele criar padrão)
 //npm init -y 
@@ -32,3 +33,11 @@ npm init -y
 npx tsc --init
 
 "dev": "ts-node src/index.ts"
+
+//
+npm init -y
+npx tsc --init
+npm i --save-dev @types/node
+"dev": "ts-node-dev --transpile-only --quiet src/index.ts"
+
+"dev": "ts-node-dev --respawn --transpile-only --quiet src/index.ts"
