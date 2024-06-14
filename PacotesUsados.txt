@@ -12,6 +12,6 @@ ex: npm run dev -- --name=John --age=30 --verbose
 npm install chalk@4.1.2
 npm install --save-dev @types/chalk
 
-//
-npm install inquirer@8.2.6 (versão 9 não funciona com typescript por algum motivo --mesmo problema do chalk)
+//versão 9 não funciona com typescript por algum motivo --mesmo problema do chalk
+npm install inquirer@8.2.6 
 npm install --save-dev @types/inquirer

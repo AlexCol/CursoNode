@@ -3,7 +3,8 @@
 + iniciando projeto
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
-//!Em computadores ainda sem Typescript instalado, pode-se instalar globalmente.
+//!Em computadores ainda sem Typescript instalado, pode-se instalar globalmente pra não ter q instalar em cada projeto.
+--mas a maquina q for executar o sistema, tem q ter tbm esses itens instalados pois eles não vão ficar no projeto
 //npm install typescript -g
 //npm install -g ts-node
 //npm install -g ts-node-dev
@@ -14,27 +15,21 @@
 //!para criar o tsconfig.json e iniciar o 'typescript'
 //npx tsc --init
 
-//No arquivo package
-    "build": "tsc",
-    "start": "ts-node src/index.ts" (ou "start": "node dist/index.js" se quiser executar os js)
-//No arquivo tsconfig:
-    "outDir": "./dist",
-    "rootDir": "./src",
-
-//pra usar core moduloes do node com typescript
+//pra usar core modules do node com typescript
 npm i --save-dev @types/node
 
+//No arquivo package adicionar
+    "dev": "ts-node-dev --transpile-only --quiet src/index.ts"
+Executa então com 'npm run dev';
+obs: se colocar o comando como 'start', pode-se executar apenas 'npm start'
 
 ///pra baixar as dependencias
 npm install
 
+//pagina da NPM (equivalente ao Nugget do C#)
+https://www.npmjs.com/
 
-npm init -y 
-npx tsc --init
-
-"dev": "ts-node src/index.ts"
-
-//
+//pra uso recorrente (descrições de cada um acima)
 npm init -y
 npx tsc --init
 npm i --save-dev @types/node

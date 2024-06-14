@@ -1,5 +1,5 @@
 {
-  "name": "13_modulo_os",
+  "name": "05_projeto_account",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/inquirer": "^9.0.7",
     "@types/node": "^20.14.2"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "inquirer": "^8.2.6"
   }
 }
