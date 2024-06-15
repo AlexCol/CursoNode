@@ -3,7 +3,7 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 
 //!meus exports
-import { CreateAccount, Deposit, Withdraw } from "../services/account";
+import { CreateAccount, Deposit, VerificaSaldo, Withdraw } from "../services/account";
 import MostraErro from "../util/showError";
 
 export default function Operation() {
@@ -31,7 +31,7 @@ function DirecionaOperacao(resposta: string) {
   }
 
   if (resposta == 'Consultar Saldo') {
-
+    VerificaSaldo();
   }
 
   if (resposta == 'Depositar') {

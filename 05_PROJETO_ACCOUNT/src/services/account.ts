@@ -15,6 +15,14 @@ export function CreateAccount() {
   BuildAccount();
 }
 
+export async function VerificaSaldo() {
+  const accountName = await SolicitaConta('verificar o saldo');
+  if (!accountName) return;
+  const account = GetAccount(accountName);
+  console.log(chalk.bgGreenBright.black(`O saldo atual da conta é de: R$ ${account.balance.toFixed(2).replace('.', ',')}`));
+  LimpaEmSeguidaVoltaMenuPrincipal();
+}
+
 export async function Deposit() {
   SaqueDeposito('depositar');
 }
@@ -56,9 +64,9 @@ async function SaqueDeposito(operacao: string) {
     SalvaNovoSaldo(accountName, account);
 
     console.log(chalk.bgGreen.black(`Operação realizada com sucesso. Novo saldo: R$ ${account.balance.toFixed(2).replace('.', ',')}`))
+    LimpaEmSeguidaVoltaMenuPrincipal();
   } catch (err) {
     MostraErro(err);
-  } finally {
     LimpaEmSeguidaVoltaMenuPrincipal();
   }
 }
@@ -86,7 +94,10 @@ async function SolicitaQuantia(operacao: string): Promise<number | void> {
   })
     .then((resp) => {
       const valorDigitado = resp.amount.replace(',', '.');
+
       if (isNaN(valorDigitado)) throw new Error('Valor informádo é inválido.');
+      if (Number(valorDigitado) !== Number(Number(valorDigitado).toFixed(2))) throw new Error('Valor pode ter no maximo duas casas decimais.');
+
       return Number(valorDigitado) * (operacao === 'depositar' ? 1 : -1);
     })
     .catch((err) => {
