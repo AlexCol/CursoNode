@@ -3,9 +3,8 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 
 //!meus exports
-import CreateAccount from "./account";
-import MostraErro from "./showError";
-
+import { CreateAccount, Deposit, Withdraw } from "../services/account";
+import MostraErro from "../util/showError";
 
 export default function Operation() {
   inquirer.prompt({
@@ -30,16 +29,21 @@ function DirecionaOperacao(resposta: string) {
   if (resposta == 'Criar Conta') {
     CreateAccount();
   }
+
   if (resposta == 'Consultar Saldo') {
 
   }
+
   if (resposta == 'Depositar') {
-
+    Deposit();
   }
+
   if (resposta == 'Sacar') {
-
+    Withdraw();
   }
+
   if (resposta == 'Sair') {
-    console.log(chalk.cyan('Até logo, nos vemos em breve.'));
+    console.log(chalk.bgCyan.black('Até logo, nos vemos em breve.'));
+    process.exit;
   }
 }

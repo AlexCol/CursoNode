@@ -1,5 +1,5 @@
 //!meus exports
-import Operation from './functions/operations';
+import Operation from './view/operations';
 
 console.clear();
 Operation();
