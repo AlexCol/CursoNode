@@ -1,8 +1,6 @@
-//!modulos externos
-import chalk from 'chalk';
-import inquirer from 'inquirer';
+//!meus exports
+import Operation from './functions/operations';
 
-//!core modules
-import fs from 'fs';
+console.clear();
+Operation();
 
-console.log('iniciamos o projeto');
