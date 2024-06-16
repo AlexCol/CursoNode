@@ -3,7 +3,7 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 
 //!meus exports
-import { CreateAccount, Deposit, VerificaSaldo, Withdraw } from "../services/account";
+import { CreateAccount, Deposit, Transferir, VerificaSaldo, Withdraw } from "../services/account";
 import MostraErro from "../util/showError";
 
 export default function Operation() {
@@ -16,6 +16,7 @@ export default function Operation() {
       'Consultar Saldo',
       'Depositar',
       'Sacar',
+      'Transferir',
       'Sair'
     ]
   })
@@ -28,21 +29,15 @@ export default function Operation() {
 function DirecionaOperacao(resposta: string) {
   if (resposta == 'Criar Conta') {
     CreateAccount();
-  }
-
-  if (resposta == 'Consultar Saldo') {
+  } else if (resposta == 'Consultar Saldo') {
     VerificaSaldo();
-  }
-
-  if (resposta == 'Depositar') {
+  } else if (resposta == 'Depositar') {
     Deposit();
-  }
-
-  if (resposta == 'Sacar') {
+  } else if (resposta == 'Sacar') {
     Withdraw();
-  }
-
-  if (resposta == 'Sair') {
+  } else if (resposta == 'Transferir') {
+    Transferir();
+  } else if (resposta == 'Sair') {
     console.log(chalk.bgCyan.black('Até logo, nos vemos em breve.'));
     process.exit;
   }
