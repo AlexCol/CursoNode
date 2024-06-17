@@ -1,0 +1,18 @@
+//inicia app
+npm init -y
+npx tsc --init
+npm i --save-dev @types/node
+"dev": "ts-node-dev --transpile-only --quiet src/index.ts"
+
+//importar express
+npm install express
+npm install --save-dev @types/express
+
+//definir porta base
+const port = 3321;
+
+//criar uma rota
+app.get('/', "middlewares", "controllers");
+--todo middleware tem q ter req, res e next, e no fim chamar next para ir para a proxima funcao (ou responder o res e não dar next se for parar ai)
+
+//executar metodo listener para a porta

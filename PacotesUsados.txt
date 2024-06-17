@@ -15,3 +15,11 @@ npm install --save-dev @types/chalk
 //versão 9 não funciona com typescript por algum motivo --mesmo problema do chalk
 npm install inquirer@8.2.6 
 npm install --save-dev @types/inquirer
+
+//express
+npm install express
+npm install --save-dev @types/express
+
+//nodemon
+npm install nodemon
+npm install --save-dev @types/nodemon
