@@ -33,6 +33,9 @@ https://www.npmjs.com/
 npm init -y
 npx tsc --init
 npm i --save-dev @types/node
+
+"dev": "nodemon --exec ts-node-dev --files --transpile-only --quiet src/index.ts"
+    ou
 "dev": "ts-node-dev --transpile-only --quiet src/index.ts"
 
 ou (se quiser usar nodemon)
