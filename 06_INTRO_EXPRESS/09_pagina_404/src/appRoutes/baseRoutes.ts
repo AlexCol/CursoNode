@@ -11,4 +11,5 @@ function MeuRetornoGet(req: Request, res: Response) {
 }
 baseRoutes.get('/', MeuRetornoGet);
 
+
 export default baseRoutes;
