@@ -1,0 +1,8 @@
+<h1>Olá handlers</h1>
+<p>Algum texto do site</p>
+<p>O nome do usuário é: {{user.name}} {{user.surname}}</p>
+{{#if auth}}
+  <p>Você está autenticado, <a href="/dashboard">clique aqui</a> para acessar a area do dashboard.</p>
+{{else}}
+  <p>Vovê não está autenticado!</p>
+{{/if}}

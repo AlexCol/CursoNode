@@ -23,3 +23,7 @@ npm install --save-dev @types/express
 //nodemon
 npm install nodemon
 npm install --save-dev @types/nodemon
+
+//express-handlebars
+npm install express-handlebars
+npm install --save-dev @types/express-handlebars

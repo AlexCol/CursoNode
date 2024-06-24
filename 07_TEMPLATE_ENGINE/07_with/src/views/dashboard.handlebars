@@ -1,0 +1,21 @@
+<h1>Dashboard</h1>
+
+
+<table>
+  <tr>
+    <th>Setor</th>
+    <th>Resultado</th>
+  </tr>
+
+{{#each resultadoPorSetor}}
+  <tr>
+    <!-- ao iterar sobre um objeto (resultadoPorSetor), devo chamar cada propriedade diretamente: ex. usar setor e não resultadoPorSetor.setor -->    
+    <th>{{setor}}</th>
+    <!-- ou usar o identificador 'this' para informar que é do objeto sendo iterado-->
+    <th>{{this.resultado}}</th>
+  </tr>
+{{/each}}
+
+</table>
+
+<a href="/">Voltar</a>
