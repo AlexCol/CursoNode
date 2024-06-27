@@ -38,6 +38,13 @@ npm i --save-dev @types/node
     ou
 "dev": "ts-node-dev --transpile-only --quiet src/index.ts"
 
+--files:
+    Esta opção faz com que ts-node-dev observe as mudanças em todos os arquivos, não apenas nos arquivos .ts.
+--transpile-only:
+    Esta opção desativa a verificação de tipos (type-checking) do TypeScript, o que pode acelerar o processo de compilação, mas significa que erros de tipo não serão detectados durante a execução. A verificação de tipos ainda pode ser feita separadamente com o comando tsc (TypeScript Compiler).
+--quiet:
+    Esta opção reduz a quantidade de mensagens de log que ts-node-dev gera, tornando a saída mais limpa.
+
 ou (se quiser usar nodemon)
 "dev": "nodemon --exec ts-node-dev --files --transpile-only --quiet src/index.ts"
 
