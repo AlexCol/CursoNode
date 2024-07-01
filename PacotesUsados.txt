@@ -27,3 +27,8 @@ npm install --save-dev @types/nodemon
 //express-handlebars
 npm install express-handlebars
 npm install --save-dev @types/express-handlebars
+
+/*Bancos de dados*/
+//mysql
+npm install mysql
+npm install --save-dev @types/mysql
