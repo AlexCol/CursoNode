@@ -1,6 +1,7 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { publicPath, viewsRootPath } from './util/baseConfigs';
-import mysql from 'mysql';
+import router from './routes';
+import { conn } from './connection';
 const exphbs = require('express-handlebars'); //necessário importar nesse formato
 
 const app = express();
@@ -16,17 +17,8 @@ app.set('views', viewsRootPath);
 app.use(express.static(publicPath));
 //????????????????????????????????????????????????????????????????? configuracoes
 
-app.get('/', (req: Request, res: Response) => {
-  res.render('home');
-});
-
-const conn = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'ale123',
-  port: 3306,
-  database: 'node_mysql'
-});
+//!rotas
+app.use('/', router);
 
 conn.connect(err => {
   if (err) {
