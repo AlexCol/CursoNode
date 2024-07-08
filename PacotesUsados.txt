@@ -28,7 +28,11 @@ npm install --save-dev @types/nodemon
 npm install express-handlebars
 npm install --save-dev @types/express-handlebars
 
-/*Bancos de dados*/
-//mysql
-npm install mysql
-npm install --save-dev @types/mysql
+/*Bancos de dados - tem o mysql, mas o mysql2 é melhor, e tem melhor suporte para o sequelize*/
+//mysql2
+npm install mysql2
+//npm install --save-dev @types/mysql2 --não tem o types
+
+//sequelize (etityframework do Node)
+npm install sequelize
+npm install --save-dev @types/sequelize
