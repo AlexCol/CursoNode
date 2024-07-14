@@ -1,0 +1,11 @@
+<h1>Users</h1>
+
+<div class="container">
+  {{#each users}}
+    <div class="item">
+      <p>{{this.userid}} - {{this.name}} - {{this.email}}</p>
+    </div>
+  {{/each}}
+</div>
+
+<a href="/">Home</a>
