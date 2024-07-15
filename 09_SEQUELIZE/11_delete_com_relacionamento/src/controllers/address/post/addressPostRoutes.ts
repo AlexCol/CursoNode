@@ -26,7 +26,7 @@ addressPostRoutes.post('/create', async (req: Request, res: Response) => {
 
 //! realiza exclusão e devolve pra lista de usuários
 addressPostRoutes.post('/delete', async (req: Request, res: Response) => {
-  const { addressid } = req.body;
+  const { addressid, userid } = req.body;
 
   try {
     await Address.destroy({ where: { addressid } });
@@ -41,7 +41,7 @@ addressPostRoutes.post('/delete', async (req: Request, res: Response) => {
   }
 
   //precisa voltar 2, pois ele volta do DELETE e então do USERS
-  res.redirect(`../../users`);
+  res.redirect(`../../users/edit/${userid}`);
 });
 
 export default addressPostRoutes;

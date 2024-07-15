@@ -47,6 +47,7 @@
       <div>
         #{{this.addressid}} - {{this.street}} - {{this.number}} - {{this.city}}
         <form action="/address/delete" method="POST">
+          <input type="hidden" name="userid" value="{{this.userid}}">
           <input type="hidden" name="addressid" value="{{this.addressid}}">
           <input type="submit" value="Excluir">
         </form>
