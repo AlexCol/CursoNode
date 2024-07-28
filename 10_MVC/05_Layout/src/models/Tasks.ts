@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 import { title } from 'process';
 
+//! aula 06 mudado forma para que se o typescript entenda os atributos
 const Task = db.define('task', {
   title: {
     type: DataTypes.STRING,

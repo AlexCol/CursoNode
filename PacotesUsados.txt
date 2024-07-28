@@ -35,5 +35,6 @@ npm install mysql2
 
 //sequelize (etityframework do Node)
 //https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/
+//https://sequelize.org/docs/v6/core-concepts/model-basics/
 npm install sequelize
 npm install --save-dev @types/sequelize
