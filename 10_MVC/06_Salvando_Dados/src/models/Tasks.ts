@@ -25,7 +25,7 @@ Task.init(
     }
   },
   {
-    sequelize: db, //com isso não precisa adicionar no 'context'
+    sequelize: db,
     modelName: 'task'
   }
 );

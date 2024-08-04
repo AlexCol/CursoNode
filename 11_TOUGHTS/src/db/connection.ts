@@ -1,5 +1,6 @@
-import { Console } from 'console';
+
 import { Sequelize } from 'sequelize';
+import { InitializeTables } from './InitTables/InitializeTables';
 
 export const db = new Sequelize(
   'toughts',
@@ -19,6 +20,8 @@ export const db = new Sequelize(
 );
 
 export async function dbContext() {
+  await InitializeTables();
+
   return db.sync({
     //force: true //reiniciar o banco (dropando tabelas e recriando tudo)
     //alter: true //força no banco alterações feitas no modelo

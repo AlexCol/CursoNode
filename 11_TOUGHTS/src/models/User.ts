@@ -2,33 +2,32 @@ import { DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequ
 import db from '../db/connection';
 
 //https://sequelize.org/docs/v6/core-concepts/model-basics/
-class Task extends Model<InferAttributes<Task>, InferCreationAttributes<Task>> {
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id?: number; //deixar com ? pois sei que será criado pelo sequelize, mas não preciso informar no objeto
-  declare title: string;
-  declare description: string;
-  declare done?: boolean;
+  declare name: string;
+  declare email: string;
+  declare senha: string;
 }
 
-Task.init(
+User.init(
   {
-    title: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    description: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    done: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    }
+    senha: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
   },
   {
     sequelize: db,
-    modelName: 'task'
+    modelName: 'user' //nome que vai pro banco
   }
 );
 
-export default Task;
+export default User;
