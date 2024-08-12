@@ -6,11 +6,11 @@ export async function InitializeTables() {
   await importModelsFromDir(modelsRootPath);
 }
 
-async function importModelsFromDir(dirPath: string) {
-  const files = fs.readdirSync(dirPath);
+async function importModelsFromDir(modelsPath: string) {
+  const files = fs.readdirSync(modelsPath);
 
   for (const file of files) {
-    const filePath = path.join(dirPath, file);
+    const filePath = path.join(modelsPath, file);
     const stat = fs.statSync(filePath);
 
     if (stat.isDirectory()) {
