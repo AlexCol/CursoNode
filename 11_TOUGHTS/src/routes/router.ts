@@ -1,6 +1,8 @@
 import express, { Router, Request, Response, NextFunction } from 'express';
 import tougthsRouter from './Tougths/tougthsRouter';
+import authRouter from './Auth/authRouter';
 import TougthsController from '../controllers/Toughts/TougthsController';
+import AuthController from '../controllers/Auth/AuthController';
 
 const router = Router();
 
@@ -10,9 +12,10 @@ router.use(express.json());
 //????????????????????????????????????????????????????????????????? configuracoes
 
 /* rota base */
-router.get('/', TougthsController.showToughts);
+router.get('/', AuthController.login);
 
 /* rotas por model */
+router.use('/auth', authRouter);
 router.use('/toughts', tougthsRouter);
 
 export default router;
