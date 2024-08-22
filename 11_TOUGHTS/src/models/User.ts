@@ -6,7 +6,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id?: number; //deixar com ? pois sei que será criado pelo sequelize, mas não preciso informar no objeto
   declare name: string;
   declare email: string;
-  declare senha: string;
+  declare password: string;
 }
 
 User.init(
@@ -19,7 +19,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    senha: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false
     },
