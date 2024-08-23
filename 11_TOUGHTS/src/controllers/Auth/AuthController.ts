@@ -35,14 +35,14 @@ export default class AuthController {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const user = {
-      name, email, password: hashedPassword
-    }
-
     try {
-      await User.create(user);
+      const user = await User.create({ name, password: hashedPassword, email });
       req.flash('message', `Usuário cadastrado com sucesso!`);
-      res.redirect('/');
+
+      req.session.userid = user.id;
+      req.session.save(() => {
+        res.redirect('/');
+      });
     } catch (err) {
       req.flash('message', `Erro: ${(err instanceof Error) ? err.message : err}`);
       res.render('auth/register');
