@@ -9,6 +9,31 @@ export default class AuthController {
     res.render('auth/login');
   }
 
+  static async loginPost(req: Request, res: Response) {
+    const { email, password } = req.body;
+    try {
+      //find user
+      const user = await User.findOne({ where: { email: email } });
+      if (!user) throw new Error("Usuário ou senha inválidos.");
+
+      //check password
+      const passwordMatch = bcrypt.compareSync(password, user.password);
+      if (!passwordMatch) throw new Error("Usuário ou senha inválidos.");
+
+      req.session.userid = user.id;
+      req.flash('message', 'Autenticação realizada com sucesso!');
+      req.session.save(() => {
+        res.redirect('/');
+      });
+
+    } catch (e) {
+      if (e instanceof Error) {
+        req.flash('message', e.message);
+        res.render('auth/login');
+      }
+    }
+  }
+
   static async register(req: Request, res: Response) {
     res.render('auth/register');
   }
@@ -47,5 +72,11 @@ export default class AuthController {
       req.flash('message', `Erro: ${(err instanceof Error) ? err.message : err}`);
       res.render('auth/register');
     }
+  }
+
+  static async logout(req: Request, res: Response) {
+    req.session.destroy(() => {
+      res.redirect('/auth/login');
+    });
   }
 }

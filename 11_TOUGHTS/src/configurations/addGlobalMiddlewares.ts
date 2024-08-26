@@ -1,10 +1,9 @@
 import { Application } from 'express';
-import { sessionControlMiddleWare } from '../middlewares/sessionControlMiddleWare';
-import { logginMidleware } from '../middlewares/logginMidleware';
-import { notFoundMiddleware } from '../middlewares/notFoundMiddleware';
+import { sessionControlMiddleWare } from '../middlewares/global/sessionControlMiddleWare';
+import { logginMidleware } from '../middlewares/global/logginMidleware';
+import { notFoundMiddleware } from '../middlewares/global/notFoundMiddleware';
 
 export function addPreRouterGlobalMiddlewares(app: Application) {
-
   app.use(logginMidleware);
   app.use(sessionControlMiddleWare);
 }
