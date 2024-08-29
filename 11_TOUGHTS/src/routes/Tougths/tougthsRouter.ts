@@ -9,6 +9,7 @@ tougthsRouter.use(checkAuthMiddleware);
 tougthsRouter.get('/add', TougthsController.createTought);
 tougthsRouter.post('/add', TougthsController.createToughtSave);
 tougthsRouter.get('/dashboard', TougthsController.dashboard);
+tougthsRouter.post('/remove', TougthsController.removeTought);
 tougthsRouter.get('/', TougthsController.showToughts);
 
 export default tougthsRouter;
