@@ -53,14 +53,18 @@ export default class TougthsController {
       const { id } = req.body;
       const userId = req.session.userid;
 
-      const tought = await Tought.findOne({ where: { id: id, userId: userId } });
-      if (!tought) {
-        req.flash('message', 'Pensamento nçao encontrado ou não percente ao usuário logado!');
-        res.redirect('/toughts/dashboard')
-        return;
-      }
-      await tought.destroy();
+      // const tought = await Tought.findOne({ where: { id: id, userId: userId } });
+      // if (!tought) {
+      //   req.flash('message', 'Pensamento não encontrado ou não percente ao usuário logado!');
+      //   res.redirect('/toughts/dashboard')
+      //   return;
+      // }
+      // await tought.destroy();
 
+      const deletados = await Tought.destroy({ where: { id: id, userId: userId } });
+      if (deletados > 0) {
+        req.flash('message', 'Pensamento excluído com sucesso!');
+      }
       req.session.save(() => {
         res.redirect('/toughts/dashboard');
       });
