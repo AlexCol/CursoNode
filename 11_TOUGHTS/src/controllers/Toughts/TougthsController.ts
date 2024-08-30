@@ -1,9 +1,25 @@
 import { Request, Response } from "express";
 import Tought from "../../models/Tought";
+import { raw } from "mysql2";
+import User from "../../models/User";
 
 export default class TougthsController {
   static async showToughts(req: Request, res: Response) {
-    res.render('toughts/home');
+    const toughtsFromDB: any = await Tought.findAll({
+      include: User,
+      raw: true
+    });
+
+    const toughts = toughtsFromDB.map(t => ({
+      ...t,
+      User: {
+        name: t['user.name'],
+        id: t['user.id'],
+        email: t['user.email']
+      }
+    }));
+
+    res.render('toughts/home', { toughts });
   }
 
   static async dashboard(req: Request, res: Response) {
@@ -65,6 +81,28 @@ export default class TougthsController {
       if (deletados > 0) {
         req.flash('message', 'Pensamento excluído com sucesso!');
       }
+      req.session.save(() => {
+        res.redirect('/toughts/dashboard');
+      });
+    } catch (e) {
+      req.flash('message', `Erro: ${e}`);
+    }
+  }
+
+  static async updateTought(req: Request, res: Response) {
+    const { id } = req.params;
+    const tought = await Tought.findOne({ where: { id: id }, raw: true });
+    res.render('toughts/edit', { tought });
+  }
+
+  static async updateToughtSave(req: Request, res: Response) {
+    const { id, title } = req.body;
+    try {
+      const nReg = await Tought.update({ title: title }, { where: { id: id } });
+      if (nReg.length > 0) {
+        req.flash('message', 'Pensamento atualizado com sucesso!');
+      }
+
       req.session.save(() => {
         res.redirect('/toughts/dashboard');
       });
