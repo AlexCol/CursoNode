@@ -1,25 +1,30 @@
 import { Request, Response } from "express";
 import Tought from "../../models/Tought";
-import { raw } from "mysql2";
-import User from "../../models/User";
+import { Op } from "sequelize";
 
 export default class TougthsController {
   static async showToughts(req: Request, res: Response) {
+    const { search, order } = req.query;
+    const searcOrder = order === 'old' ? "ASC" : "DESC";
+
     const toughtsFromDB: any = await Tought.findAll({
-      include: User,
-      raw: true
+      include: { all: true },
+      where: {
+        title: {
+          [Op.like]: `%${search || ''}%`
+        }
+      },
+      order: [['createdAt', searcOrder]]
     });
 
-    const toughts = toughtsFromDB.map(t => ({
-      ...t,
-      User: {
-        name: t['user.name'],
-        id: t['user.id'],
-        email: t['user.email']
-      }
-    }));
+    const toughts = toughtsFromDB.map((t: { [x: string]: any; }) => {
+      const rawTought = { ...t.dataValues };
+      rawTought.user = t.dataValues.user.dataValues;
+      return rawTought;
+    });
 
-    res.render('toughts/home', { toughts });
+    const toughtsQty = toughts.length;
+    res.render('toughts/home', { toughts, search, toughtsQty });
   }
 
   static async dashboard(req: Request, res: Response) {
@@ -35,7 +40,6 @@ export default class TougthsController {
     });
 
     var emptyToughts = toughts.length == 0;
-
     res.render('toughts/dashboard', { toughts, emptyToughts });
   }
 
