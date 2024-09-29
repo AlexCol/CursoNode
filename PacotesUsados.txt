@@ -52,3 +52,7 @@ npm install --save-dev @types/bcryptjs
 npm install .
 npm install --save-dev @types/.
 
+//mongo db
+/*criar comando para instalar mongodb no node*/
+npm install mongodb 
+npm install --save-dev @types/mongodb
