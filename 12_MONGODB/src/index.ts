@@ -1,4 +1,5 @@
-import { appConfiguration } from "./configuration/forApp/AppConfiguration";
+
+import { appConfiguration } from "./configuration/forApp/appConfiguration";
 import connectToMongo from "./db/conn";
 
 const express = require('express');

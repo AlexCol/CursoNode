@@ -1,8 +1,8 @@
 import { Application } from 'express';
-import produtcsRouter from '../../routes/products/produtctsRouter';
+import router from '../../routes/router';
 
 function addAppRoutes(app: Application): void {
-  app.use('/products', produtcsRouter);
+  app.use('/', router);
 }
 
 export default addAppRoutes;

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import logger from "../../configuration/general/logger/logger";
 
 export function notFoundMiddleware(req: Request, res: Response, next: NextFunction) {
-  console.log("Pagina não encontrada.");
-  res.render('notFound');
+  logger.error("Pagina não encontrada.");
+  //res.render('notFound');
 }
