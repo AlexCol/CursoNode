@@ -2,7 +2,9 @@
 <div class="products">
   {{#each products}}
     <div class="product">
-      <img src="{{this.image}}" alt="{{this.name}}">
+      {{#if this.image}}
+        <img src="{{this.image}}" alt="{{this.name}}">
+      {{/if}}
       <h3>{{this.name}}</h3>
       <p>R${{this.price}}</p>
       <div class="actions">

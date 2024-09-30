@@ -3,8 +3,9 @@ import Product from "../../models/Product";
 import logger from "../../configuration/general/logger/logger";
 
 export default class ProductController {
-  static showProducts(req: Request, res: Response) {
-    res.render("products/all");
+  static async showProducts(req: Request, res: Response) {
+    const products = await Product.getProducts();
+    res.render("products/all", { products });
   }
 
   static createProduct(req: Request, res: Response) {
@@ -13,8 +14,8 @@ export default class ProductController {
 
   static async createProductPost(req: Request, res: Response) {
     try {
-      const { name, price, description } = req.body;
-      const product = new Product(name, price, description);
+      const { name, price, image, description } = req.body;
+      const product = new Product(name, price, image, description);
       await product.save();
     } catch (err) {
       logger.error(err);
