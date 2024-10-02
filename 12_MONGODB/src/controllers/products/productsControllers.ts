@@ -37,8 +37,8 @@ export default class ProductController {
 
   static async editProductPost(req: Request, res: Response) {
     const { id, name, price, image, description } = req.body;
-    const product = { id, name, price, image, description };
-    //await product.save();
+    const product = new Product(name, price, image, description);
+    await product.update(id);
     res.redirect("/products");
   }
 

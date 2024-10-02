@@ -20,6 +20,11 @@ class Product {
     return newProduct;
   }
 
+  async update(id: string): Promise<void> {
+    const db = await connectToMongo();
+    await db.collection('products').updateOne({ _id: new ObjectId(id) }, { $set: this });
+  }
+
   static async getProducts(): Promise<Product[]> {
     const db = await connectToMongo();
     const products = await db.collection('products').find().toArray();
