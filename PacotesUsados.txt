@@ -57,5 +57,10 @@ npm install --save-dev @types/.
 npm install mongodb 
 npm install --save-dev @types/mongodb
 
+//mongoose
+/*criar comando para instalar mongodb no node*/
+npm install mongoose 
+npm install --save-dev @types/mongoose
+
 //zod para validação de dados
 npm install zod

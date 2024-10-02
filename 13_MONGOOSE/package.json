@@ -1,0 +1,27 @@
+{
+  "name": "12_mongodb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node-dev --files --transpile-only --quiet src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/express-handlebars": "^6.0.0",
+    "@types/mongodb": "^4.0.7",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^22.5.4",
+    "@types/nodemon": "^1.19.6"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "express-handlebars": "^8.0.1",
+    "mongodb": "^6.9.0",
+    "mongoose": "^8.7.0",
+    "nodemon": "^3.1.7"
+  }
+}
