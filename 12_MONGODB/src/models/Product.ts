@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import connectToMongo from '../db/conn';
 
 class Product {
@@ -25,10 +26,21 @@ class Product {
     return products;
   }
 
+  static async getProductById(id: string): Promise<Product> {
+    const db = await connectToMongo();
+    const product = await db.collection('products').findOne({ _id: new ObjectId(id) });
+    return product;
+  }
+
   static async all(): Promise<Product[]> {
     const db = await connectToMongo();
     const products = await db.collection('products').find().toArray();
     return products.map((product: any) => new Product(product.name, product.price, product.image, product.description));
+  }
+
+  static async removeById(id: string): Promise<void> {
+    const db = await connectToMongo();
+    await db.collection('products').deleteOne({ _id: new ObjectId(id) });
   }
 }
 
