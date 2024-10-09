@@ -7,7 +7,7 @@ testControllerRouter.get("/", (req: Request, res: Response) => {
 });
 
 testControllerRouter.post("/", (req: Request, res: Response) => {
-  res.send("Post is used for create a new item!");
+  res.status(201).send("Post is used for create a new item!");
 });
 
 testControllerRouter.put("/", (req: Request, res: Response) => {
@@ -19,7 +19,7 @@ testControllerRouter.delete("/", (req: Request, res: Response) => {
 });
 
 testControllerRouter.patch("/", (req: Request, res: Response) => {
-  res.send("Patch is used for update an existing item in partial!");
+  res.status(206).send("Patch is used for update an existing item in partial!");
 });
 
 export default testControllerRouter;
