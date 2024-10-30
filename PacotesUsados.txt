@@ -64,3 +64,15 @@ npm install --save-dev @types/mongoose
 
 //zod para validação de dados
 npm install zod
+
+//CORS
+npm install cors
+npm install --save-dev @types/cors
+
+//jwt
+npm install jsonwebtoken
+npm install --save-dev @types/jsonwebtoken
+
+//multer --trabalho com importação de arquivos
+npm install multer
+npm install --save-dev @types/multer
