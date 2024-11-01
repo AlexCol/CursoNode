@@ -76,3 +76,7 @@ npm install --save-dev @types/jsonwebtoken
 //multer --trabalho com importação de arquivos
 npm install multer
 npm install --save-dev @types/multer
+
+//dotenv
+npm install dotenv
+npm install --save-dev @types/dotenv
