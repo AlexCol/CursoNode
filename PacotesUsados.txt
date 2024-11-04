@@ -80,3 +80,7 @@ npm install --save-dev @types/multer
 //dotenv
 npm install dotenv
 npm install --save-dev @types/dotenv
+
+//bcrypt (criptografar senhas)
+npm install bcrypt
+npm install --save-dev @types/bcrypt

@@ -15,7 +15,7 @@ const User = mongoose.model('User', new mongoose.Schema({
     },
     image: {
         type: String,
-        required: true
+        required: false
     },
     phone: {
         type: String,

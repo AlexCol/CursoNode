@@ -1,41 +1,43 @@
-import logger from "../middleware/global/logger/logger";
+import mongoose from 'mongoose';
+import logger from '../middleware/global/logger/logger';
 
-const { MongoClient } = require('mongodb');
-
-const uri = 'mongodb://localhost:27017/getapet';
-
-// Criar um client Mongo, que tenha um pool de conexões de 10 e feche conexões ociosas após 10 minutos
-const client = new MongoClient(uri, {
-    maxPoolSize: 10,
-    wtimeoutMS: 2500,
-    connectTimeoutMS: 30000,
-    socketTimeoutMS: 360000,
-    noDelay: true,
-    maxIdleTimeMS: 600000
-});
-
-async function connectToMongo() {
+async function connectToDatabase() {
     try {
-        // Conectar ao MongoDB; o driver gerencia o pool de conexões automaticamente
-        await client.connect();
+        logger.info('Attempting to connect to MongoDB...');
+        await mongoose.connect('mongodb://localhost:27017/getapet', {
+            maxPoolSize: 10,           // Limite de conexões simultâneas
+            wtimeoutMS: 2500,          // Tempo máximo para operações de gravação
+            connectTimeoutMS: 30000,   // Tempo máximo para tentativa de conexão
+            socketTimeoutMS: 360000,   // Tempo máximo para operações de socket
+            noDelay: true,             // Desativa o algoritmo de Nagle
+            maxIdleTimeMS: 600000      // Tempo máximo de inatividade antes de fechar a conexão
+        });
+
         logger.info('Connected to MongoDB');
-        return client.db();
-    } catch (error) {
-        logger.error('Failed to connect to MongoDB', error);
-        throw error;
+    } catch (err) {
+        logger.error('Error connecting to MongoDB:', err);
+        process.exit(1); // Encerra o processo se a conexão falhar
     }
 }
 
-// Fechar o cliente corretamente quando o processo for encerrado
-process.on('SIGINT', async () => {
-    try {
-        await client.close(); // Fecha todas as conexões no pool
-        logger.info('MongoDB connection closed');
-    } catch (error) {
-        logger.error('Error closing MongoDB connection', error);
-    } finally {
-        process.exit(0);
-    }
+// Eventos de conexão do Mongoose para monitorar o status da conexão
+mongoose.connection.on('connected', () => {
+    logger.info('Mongoose connected to DB');
 });
 
-export default connectToMongo;
+mongoose.connection.on('error', (err) => {
+    logger.error('Mongoose connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    logger.warn('Mongoose disconnected from DB');
+});
+
+// Tentativa de reconexão ao MongoDB se houver desconexão
+process.on('SIGINT', async () => {
+    await mongoose.connection.close();
+    logger.info('Mongoose connection closed due to app termination');
+    process.exit(0);
+});
+
+export default connectToDatabase;
