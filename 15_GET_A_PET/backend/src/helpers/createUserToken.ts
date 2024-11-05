@@ -11,7 +11,9 @@ const createToken = (user: IUser, req: Request, res: Response) => {
     const secretKey = process.env.JWT_SECRET as string;
     const jwtOptions: SignOptions = {
         issuer: 'get-a-pet',
-        audience: 'audience'
+        audience: 'audience',
+        encoding: 'HS512',
+        expiresIn: '24h'
     };
 
     const token = jwt.sign(payload, secretKey, jwtOptions);
