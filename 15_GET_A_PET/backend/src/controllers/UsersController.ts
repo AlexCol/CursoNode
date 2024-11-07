@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import User from "../models/User";
-import bcrypt from 'bcrypt';
+import { CryptoPassword } from "../util/Crypto";
+import { createUserToken } from "../helpers/createUserToken";
 
 const usersController = Router();
 
@@ -33,8 +34,7 @@ usersController.post('/register', async (req: Request, res: Response) => {
     }
 
     //create password hash
-    const salt = await bcrypt.genSalt(12);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await CryptoPassword(password);
 
     //create user
     const user = new User({
@@ -46,7 +46,7 @@ usersController.post('/register', async (req: Request, res: Response) => {
 
     try {
         await user.save();
-        res.status(201).json({ Success: 'User created successfully' });
+        await createUserToken(user, req, res); //feito pelo curso, mas não é boa pratica retornar o token no registro, pois assim não há validações de email, etc.
     } catch (error) {
         res.status(500).json({ Error: error });
     }
