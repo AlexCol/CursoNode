@@ -7,7 +7,12 @@ export const CryptoPassword = async (password: string): Promise<string> => {
     return await bcrypt.hash(password, salt);
 }
 
-export const ComparePassword = async (password: string, hashedPassword: string): Promise<boolean> => {
+export const ComparePassword = async (password: string, hashedPassword?: string): Promise<boolean> => {
+    if (!hashedPassword) {
+        logger.error('No hashed password provided');
+        return false;
+    }
+
     try {
         return await bcrypt.compare(password, hashedPassword);
     } catch (error) {

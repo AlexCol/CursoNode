@@ -1,9 +1,9 @@
 import { Request, Response, Router } from "express";
-import User from "../models/User";
-import { ComparePassword, CryptoPassword } from "../util/Crypto";
-import { createUserToken } from "../helpers/createUserToken";
-import logger from "../middleware/global/logger/logger";
+import User, { IUser } from "../models/User";
+import { ComparePassword } from "../util/Crypto";
+import { createUserToken, IJWTClaims } from "../helpers/createUserToken";
 import { getToken } from "../helpers/getToken";
+import jwt from "jsonwebtoken";
 
 const authController = Router();
 
@@ -25,6 +25,25 @@ authController.get('/checkuser', async (req: Request, res: Response) => {
     console.log(req.headers.authorization);
     if (req.headers.authorization) {
         const token = getToken(req);
+        if (!token) {
+            res.status(401).json({ Error: 'Unauthorized' });
+            return;
+        }
+
+        try {
+            const secret = process.env.JWT_SECRET || 'secret';
+            const decoded = jwt.verify(token, secret) as IJWTClaims;
+
+            currentUser = await User.findById(decoded.id);
+            if (!currentUser) {
+                res.status(404).json({ Error: 'User not found' });
+                return;
+            }
+            currentUser.password = undefined;
+        } catch (error) {
+            res.status(401).json({ Error: error });
+            return;
+        }
 
     } else {
         currentUser = null;

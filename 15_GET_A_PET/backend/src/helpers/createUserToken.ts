@@ -1,10 +1,16 @@
-import jwt, { SignOptions } from 'jsonwebtoken';
+import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { IUser } from '../models/User';
 
+export interface IJWTClaims extends JwtPayload {
+    name: string;
+    id: string;
+    demaisClaims: string;
+}
+
 export const createUserToken = (user: IUser, req: Request, res: Response) => {
 
-    const claims = {
+    const claims: IJWTClaims = {
         name: user.name,
         id: user._id,
         demaisClaims: "demaisClaims"
