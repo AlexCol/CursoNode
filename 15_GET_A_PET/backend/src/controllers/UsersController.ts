@@ -1,12 +1,33 @@
 import { Request, Response, Router } from "express";
-import User from "../models/User";
+import User, { IUser } from "../models/User";
 import { CryptoPassword } from "../util/Crypto";
 import { createUserToken } from "../helpers/createUserToken";
+import { isObjectIdOrHexString } from "mongoose";
+import verifyToken from "../helpers/verifyToken";
 
 const usersController = Router();
 
 usersController.get('/', (req: Request, res: Response) => {
     res.send('Users Controller');
+});
+
+usersController.get('/:id', async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    if (!isObjectIdOrHexString(id)) {
+        res.status(400).json({ Error: 'Invalid ID' });
+        return;
+    }
+
+    const user = await User.findById(id).select('-password') as IUser;
+
+    if (!user) {
+        res.status(404).json({ Error: 'User not found' });
+        return;
+    }
+
+    //user.password = undefined; --sem necessidade por causa do select
+    res.status(200).json({ user });
 });
 
 usersController.post('/register', async (req: Request, res: Response) => {
@@ -50,6 +71,10 @@ usersController.post('/register', async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({ Error: error });
     }
+});
+
+usersController.put('/:id', verifyToken, (req: Request, res: Response) => {
+    res.status(200).send('Update User');
 });
 
 export default usersController;
