@@ -73,8 +73,49 @@ usersController.post('/register', async (req: Request, res: Response) => {
     }
 });
 
-usersController.put('/:id', verifyToken, (req: Request, res: Response) => {
-    res.status(200).send('Update User');
+usersController.put('', verifyToken, async (req: Request, res: Response) => {
+    const { id } = req.user;
+    const { name, email, password, confirmPassword, image, phone } = req.body;
+
+    if (!isObjectIdOrHexString(id)) {
+        res.status(400).json({ Error: 'Invalid ID' });
+        return;
+    }
+    if ((password || confirmPassword) && password !== confirmPassword) {
+        res.status(422).json({ Error: 'Passwords do not match' });
+        return
+    }
+
+    const user = await User.findById(id);
+    if (!user) {
+        res.status(404).json({ Error: 'User not found' });
+        return;
+    }
+
+    if (name) user.name = name;
+    if (password) user.password = await CryptoPassword(password.toString());
+    if (image) user.image = image;
+    if (phone) user.phone = phone;
+
+    if (email) {
+        const emailExists = await User.findOne({ email });
+        if (emailExists && emailExists._id.toString() !== id) {
+            res.status(409).json({ Error: 'Email already exists for another user' });
+            return;
+        } else {
+            user.email = email;
+        }
+    }
+
+    try {
+        await user.save();
+        res.status(200).json({ Message: 'User updated' });
+
+        //user.password = undefined;
+        //res.status(200).json({ user });
+    } catch (error) {
+        res.status(500).json({ Error: error });
+    }
 });
 
 export default usersController;

@@ -11,11 +11,11 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
     }
 
     try {
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET || "") as IJWTClaims;
+        const verified = jwt.verify(token, process.env.JWT_SECRET || "") as IJWTClaims;
         req.user = verified;
         next();
     } catch (error) {
-        res.status(400).send(`Invalid Token: ${error}`);
+        res.status(400).send({ Message: `Invalid Token: ${error}` });
     }
 }
 
