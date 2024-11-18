@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+export interface IPet extends Document {
+    name: string;
+    age: number;
+    weight: number;
+    color: string;
+    image?: string;
+    available: boolean;
+    user: mongoose.Schema.Types.ObjectId;
+    adopter?: mongoose.Schema.Types.ObjectId;
+}
+
 const Pet = mongoose.model('Pet', new mongoose.Schema({
     name: {
         type: String,
@@ -18,8 +29,7 @@ const Pet = mongoose.model('Pet', new mongoose.Schema({
         required: true
     },
     image: {
-        type: String,
-        required: true
+        type: String
     },
     available: {
         type: Boolean,
