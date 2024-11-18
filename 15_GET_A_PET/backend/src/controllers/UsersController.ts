@@ -5,6 +5,7 @@ import { createUserToken } from "../helpers/createUserToken";
 import { isObjectIdOrHexString } from "mongoose";
 import verifyToken from "../helpers/verifyToken";
 import { imageUpload } from "../helpers/imageUpload";
+import { excluiImagemAtual } from "../helpers/excluiImagemAtual";
 
 const usersController = Router();
 
@@ -109,7 +110,7 @@ usersController.put('', verifyToken, imageUpload.single("image"), async (req: Re
         }
 
         if (req.file) {
-            excluiImagemAtual(user, res);
+            excluiImagemAtual(user);
             user.image = req.file.filename;
         }
 
@@ -121,14 +122,3 @@ usersController.put('', verifyToken, imageUpload.single("image"), async (req: Re
 });
 
 export default usersController;
-
-function excluiImagemAtual(user: IUser, res: Response) {
-    if (user.image) {
-        const fs = require('fs');
-        fs.unlink(`public/images/users/${user.image}`, (err: any) => {
-            if (err && err.code !== 'ENOENT') { // Ignora erro se o arquivo não existir
-                throw err;
-            }
-        });
-    }
-}

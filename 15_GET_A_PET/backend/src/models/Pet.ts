@@ -5,7 +5,7 @@ export interface IPet extends Document {
     age: number;
     weight: number;
     color: string;
-    image?: string;
+    image?: string[];
     available: boolean;
     user: mongoose.Schema.Types.ObjectId;
     adopter?: mongoose.Schema.Types.ObjectId;
@@ -29,7 +29,7 @@ const Pet = mongoose.model('Pet', new mongoose.Schema({
         required: true
     },
     image: {
-        type: String
+        type: Array
     },
     available: {
         type: Boolean,
