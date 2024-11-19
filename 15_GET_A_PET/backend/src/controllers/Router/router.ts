@@ -26,7 +26,7 @@ fs.readdirSync(controllersDir).forEach(async (file) => {
         const controllerPath = path.resolve(controllersDir, file);
         const controllerModule = await import(controllerPath);
         router.use(`/${controllerName}`, controllerModule.default || controllerModule);
-        //logger.info(`Controller /${controllerName} registrado.`);
+        logger.info(`Controller /${controllerName} registrado.`);
     }
 });
 
