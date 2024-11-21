@@ -5,10 +5,13 @@ import logger from "../middleware/global/logger/logger";
 import { imageUpload } from "../helpers/imageUpload";
 import { excluiImagemAtual } from "../helpers/excluiImagemAtual";
 import { isObjectIdOrHexString } from "mongoose";
+import User from "../models/User";
 
 const petsController = Router();
 
-petsController.get('/', verifyToken, async (req: Request, res: Response) => {
+petsController.use(verifyToken); //todas as rotas do controller são protegidas
+
+petsController.get('/', async (req: Request, res: Response) => {
     try {
         const pets = await Pet.find().sort({ createdAt: -1 });
         res.status(200).json(pets);
@@ -17,7 +20,7 @@ petsController.get('/', verifyToken, async (req: Request, res: Response) => {
     }
 });
 
-petsController.get('/mypets', verifyToken, async (req: Request, res: Response) => {
+petsController.get('/mypets', async (req: Request, res: Response) => {
     const userId = req.user.id;
 
     try {
@@ -28,7 +31,7 @@ petsController.get('/mypets', verifyToken, async (req: Request, res: Response) =
     }
 });
 
-petsController.get('/myadoptions', verifyToken, async (req: Request, res: Response) => {
+petsController.get('/myadoptions', async (req: Request, res: Response) => {
     const userId = req.user.id;
 
     try {
@@ -39,7 +42,7 @@ petsController.get('/myadoptions', verifyToken, async (req: Request, res: Respon
     }
 });
 
-petsController.get('/:id', verifyToken, async (req: Request, res: Response) => {
+petsController.get('/:id', async (req: Request, res: Response) => {
     const petId = req.params.id;
     if (!isObjectIdOrHexString(petId)) {
         res.status(400).json({ Error: 'Invalid ID' });
@@ -58,7 +61,7 @@ petsController.get('/:id', verifyToken, async (req: Request, res: Response) => {
     }
 });
 
-petsController.delete('/:id', verifyToken, async (req: Request, res: Response) => {
+petsController.delete('/:id', async (req: Request, res: Response) => {
     const petId = req.params.id;
     if (!isObjectIdOrHexString(petId)) {
         res.status(400).json({ Error: 'Invalid ID' });
@@ -87,7 +90,7 @@ petsController.delete('/:id', verifyToken, async (req: Request, res: Response) =
 
 });
 
-petsController.put('/:id', verifyToken, imageUpload.array("images"), async (req: Request, res: Response) => {
+petsController.put('/:id', imageUpload.array("images"), async (req: Request, res: Response) => {
     const petId = req.params.id;
     const { name, age, weight, color, available } = req.body;
     const images = req.files as Express.Multer.File[];
@@ -130,7 +133,7 @@ petsController.put('/:id', verifyToken, imageUpload.array("images"), async (req:
     }
 });
 
-petsController.post('/', verifyToken, imageUpload.array("images"), async (req: Request, res: Response) => {
+petsController.post('/', imageUpload.array("images"), async (req: Request, res: Response) => {
     const { name, age, weight, color } = req.body;
     const images = req.files as Express.Multer.File[];
 
@@ -171,6 +174,78 @@ petsController.post('/', verifyToken, imageUpload.array("images"), async (req: R
 
         await newPet.save();
         res.status(201).send();
+    } catch (error) {
+        res.status(400).json({ Error: error });
+    }
+});
+
+petsController.patch('/schedule/:id', async (req: Request, res: Response) => {
+    const petId = req.params.id;
+
+    if (!isObjectIdOrHexString(petId)) {
+        res.status(400).json({ Error: 'Invalid ID' });
+        return;
+    }
+
+    try {
+        const pet = await Pet.findById(petId);
+        if (!pet) {
+            res.status(404).json({ Error: 'Pet not found' });
+            return;
+        }
+
+        if (pet.user.toString() == req.user.id) {
+            res.status(403).json({ Error: 'Must schedule to another users Pet' });
+            return;
+        }
+
+        if (pet.adopter) {
+            if (pet.adopter.toString() == req.user.id)
+                res.status(403).json({ Error: 'You already scheduled this Pet' });
+            else
+                res.status(403).json({ Error: 'Pet already scheduled by another user' });
+            return;
+        }
+
+        pet.adopter = req.user.id;
+        await pet.save();
+
+        const owner = await User.findById(pet.user).select({ name: 1, phone: 1 });
+        res.status(200).json({ message: `Schedule successfully. Call ${owner?.name} on the phone ${owner?.phone} the choose the location for the visit.` });
+    } catch (error) {
+        res.status(400).json({ Error: error });
+    }
+});
+
+petsController.patch('/concludeadoption/:id', async (req: Request, res: Response) => {
+
+    const petId = req.params.id;
+
+    if (!isObjectIdOrHexString(petId)) {
+        res.status(400).json({ Error: 'Invalid ID' });
+        return;
+    }
+
+    try {
+        const pet = await Pet.findById(petId);
+        if (!pet) {
+            res.status(404).json({ Error: 'Pet not found' });
+            return;
+        }
+
+        if (pet.user.toString() !== req.user.id) {
+            res.status(403).json({ Error: 'Only the owner can conclude the adoption!' });
+            return;
+        }
+
+        if (!pet.adopter) {
+            res.status(403).json({ Error: 'No one scheduled this Pet' });
+            return;
+        }
+
+        pet.available = false;
+        await pet.save();
+        res.status(200).json({ message: 'Adoption concluded successfully' });
     } catch (error) {
         res.status(400).json({ Error: error });
     }
