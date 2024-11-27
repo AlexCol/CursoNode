@@ -10,9 +10,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode; }>) {
   console.log("RootLayout");
-  return (
+  return ( //aqui é que se configura o html do layout, somente aqui que se pode mexer no html
     <html lang="en">
-      <body className={`app`}>
+      <body
+        className={`app`}
+      //style={{ backgroundImage: `url(${'./altbg.png'})`, backgroundSize: 'cover' }} //pra buscar imagem da pasta public
+      >
         <div>Sou o layout</div>
         {children}
       </body>
