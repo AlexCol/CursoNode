@@ -1,0 +1,99 @@
+1. Parênteses ()
+Como já mencionado, pastas com parênteses são ignoradas no caminho da URL. São úteis para organização de arquivos sem afetar a estrutura de rotas.
+
+Exemplo:
+
+app/
+├── (admin)/
+│   ├── dashboard/
+│   │   └── page.tsx
+URL resultante: /dashboard (o nome (admin) não aparece na URL).
+
+2. Colchetes [] (Rota dinâmica)
+Os colchetes são usados para criar rotas dinâmicas, permitindo parâmetros nas URLs.
+
+Exemplo:
+
+app/
+├── product/
+│   ├── [id]/
+│   │   └── page.tsx
+URL: /product/123
+Parâmetro disponível no arquivo: params.id (via props do App Router).
+3. Dois colchetes [[...]] (Rota catch-all e opcional)
+Dois colchetes são usados para capturar rotas dinâmicas opcionais e catch-all.
+
+Catch-all (obrigatório)
+app/
+├── blog/
+│   ├── [...slug]/
+│   │   └── page.tsx
+URLs: /blog/post-1, /blog/category/post-2
+Parâmetro: params.slug (array contendo o restante do caminho).
+Opcional
+app/
+├── docs/
+│   ├── [[...slug]]/
+│   │   └── page.tsx
+URLs: /docs, /docs/getting-started, /docs/api/auth
+Parâmetro: params.slug (array ou undefined se for apenas /docs).
+4. Prefixo @ (Routing groups)
+O @ pode ser usado em combinação com parênteses para criar grupos de rotas reutilizáveis. Esses grupos permitem que você aplique diferentes layouts ou funcionalidades para subconjuntos de rotas.
+
+Exemplo:
+
+app/
+├── (marketing)@marketing/
+│   ├── layout.tsx
+│   └── home/
+│       └── page.tsx
+├── (dashboard)@dashboard/
+│   ├── layout.tsx
+│   └── analytics/
+│       └── page.tsx
+Aqui, @marketing e @dashboard são aliases de grupo, permitindo reutilização em várias combinações de layouts.
+5. default (Rota padrão em layouts ou pastas segmentadas)
+O arquivo chamado default.tsx é usado para renderizar um conteúdo padrão em layouts segmentados ou quando não há rota correspondente.
+
+Exemplo:
+
+app/
+├── about/
+│   ├── page.tsx
+│   ├── team/
+│   │   ├── page.tsx
+│   │   └── default.tsx
+URL /about/team: Se não existir uma página correspondente, o Next.js renderiza default.tsx.
+6. page.tsx, layout.tsx, error.tsx, loading.tsx, e not-found.tsx
+Esses nomes têm significados específicos no App Router:
+
+page.tsx: Define o conteúdo principal de uma rota (renderiza quando a rota é acessada).
+layout.tsx: Define o layout persistente que envolve os filhos (útil para cabeçalhos, rodapés, etc.).
+error.tsx: Renderiza quando há um erro na rota ou nos filhos.
+loading.tsx: Renderiza durante carregamento (quando suspense ou fetch são usados).
+not-found.tsx: Renderiza quando a rota não é encontrada (404 personalizado).
+7. Arquivo middleware.ts
+O arquivo middleware.ts é usado para interceptar requisições e modificar comportamentos antes que elas cheguem à rota.
+
+Exemplo:
+
+src/
+├── middleware.ts
+Uso comum:
+
+Redirecionamentos
+Autenticação
+Controle de acesso
+Resumo das Convenções:
+Caractere/Arquivo	Função
+()	Ignorar nome no caminho e organizar rotas
+[]	Rota dinâmica
+[[...]]	Rota dinâmica catch-all e opcional
+@	Routing groups (combinar layouts reutilizáveis)
+default.tsx	Conteúdo padrão em uma rota segmentada
+page.tsx	Página principal da rota
+layout.tsx	Layout persistente para as rotas-filhas
+error.tsx	Página para exibir erros
+loading.tsx	Feedback de carregamento
+not-found.tsx	Página para rotas não encontradas
+Se precisar de mais detalhes ou exemplos sobre algum deles, é só avisar! 😊
