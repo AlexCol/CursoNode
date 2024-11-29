@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 import "./index.css";
+import NavBar from "@/components/NavBar";
 
 export default function RootLayout({
   children,

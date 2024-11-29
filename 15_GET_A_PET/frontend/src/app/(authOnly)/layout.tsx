@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import NavBar from "@/components/NavBar";
 import React from "react";
 
 export default function LayoutAuthOnly({
@@ -5,8 +7,10 @@ export default function LayoutAuthOnly({
 }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <>
-      <h5>LayoutAuthOnly -- Adicionar validação se não estiver logado, jogar para a tela de login</h5>
+      <NavBar />
       {children}
+      <h5>LayoutAuthOnly -- Adicionar validação se não estiver logado, jogar para a tela de login</h5>
+      <Footer />
     </>
   );
 }
