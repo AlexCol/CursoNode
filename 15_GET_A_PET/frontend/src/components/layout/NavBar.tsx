@@ -8,7 +8,7 @@ import styles from './Navbar.module.css';
 import Logo from '../../assets/img/logo.png';
 
 function Navbar() {
-  const authenticated = true;
+  const authenticated = false;
 
   const logout = () => {
     alert("logout");
