@@ -5,11 +5,11 @@ import styles from '../../../../components/form/Form.module.css';
 import Input from '../../../../components/form/Input';
 
 /* contexts */
-//import { Context } from '../../../context/UserContext'
+import { UserContext } from '@/context/userContext';
 
 function Register() {
   const [user, setUser] = useState({})
-  //const { register } = useContext(Context)
+  const { register } = useContext(UserContext)
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setUser({ ...user, [e.target.name]: e.target.value })
@@ -17,7 +17,7 @@ function Register() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //register(user)
+    register(user);
   }
 
   return (
@@ -55,7 +55,7 @@ function Register() {
         <Input
           text="Confirmação de senha"
           type="password"
-          name="confirmpassword"
+          name="confirmPassword"
           placeholder="Confirme a sua senha"
           handleOnChange={handleChange}
         />

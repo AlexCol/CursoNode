@@ -3,6 +3,7 @@ import "./index.css";
 import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 import Container from "@/components/layout/Container";
+import { UserProvider } from "@/context/userContext";
 
 export default function RootLayout({
   children,
@@ -15,11 +16,13 @@ export default function RootLayout({
         <title>Get a Pet</title>
       </head>
       <body className={`app`}>
-        <NavBar />
-        <Container>
-          {children}
-        </Container>
-        <Footer />
+        <UserProvider>
+          <NavBar />
+          <Container>
+            {children}
+          </Container>
+          <Footer />
+        </UserProvider>
       </body>
     </html>
   );
