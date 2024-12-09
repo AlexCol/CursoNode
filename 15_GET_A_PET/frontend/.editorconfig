@@ -1,0 +1,18 @@
+# Top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+quote_type = single # Não é suportado nativamente pelo EditorConfig, mas algumas extensões do VS Code interpretam
+
+[*.ts, *.tsx]
+max_line_length = 1000
+quote_type = single # Apenas funciona com extensões específicas
+
+[*.css, *.scss]
+indent_size = 2

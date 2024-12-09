@@ -1,4 +1,4 @@
-import styles from './Input.module.css'
+import styles from './Input.module.css';
 
 interface InputProps {
   type?: string;
@@ -32,7 +32,7 @@ function Input({
         {...(multiple ? { multiple } : '')}
       />
     </div>
-  )
+  );
 }
 
-export default Input
+export default Input;

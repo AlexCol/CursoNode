@@ -1,14 +1,16 @@
-import { ReactNode } from "react";
-import "./index.css";
-import NavBar from "@/components/layout/NavBar";
-import Footer from "@/components/layout/Footer";
-import Container from "@/components/layout/Container";
-import { UserProvider } from "@/context/userContext";
+import { ReactNode } from 'react';
+import './index.css';
+import NavBar from '@/components/layout/NavBar';
+import Footer from '@/components/layout/Footer';
+import Container from '@/components/layout/Container';
+import { UserProvider } from '@/context/userContext';
+import Message from '@/components/layout/Message';
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: ReactNode; }>) {
-  return ( //aqui é que se configura o html do layout, somente aqui que se pode mexer no html
+}: Readonly<{ children: ReactNode }>) {
+  return (
+    //aqui é que se configura o html do layout, somente aqui que se pode mexer no html
     <html lang="en">
       <head>
         <meta charSet="UTF-8" />
@@ -18,9 +20,8 @@ export default function RootLayout({
       <body className={`app`}>
         <UserProvider>
           <NavBar />
-          <Container>
-            {children}
-          </Container>
+          <Message />
+          <Container>{children}</Container>
           <Footer />
         </UserProvider>
       </body>

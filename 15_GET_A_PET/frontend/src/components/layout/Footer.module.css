@@ -1,16 +1,16 @@
 .footer {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #eee;
-    color: #444;
-    border-top: 1px solid #666;
-    
-    /*bloco abaixo é para deixar o componente sempre 'no fundo'*/
-    min-height: 5vh;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+  color: #444;
+  border-top: 1px solid #666;
+
+  /*bloco abaixo é para deixar o componente sempre 'no fundo'*/
+  min-height: 5vh;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
