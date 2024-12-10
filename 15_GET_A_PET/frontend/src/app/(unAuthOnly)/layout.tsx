@@ -1,22 +1,24 @@
-//"use client";
+'use client';
 
-import React from "react";
+import { UserContext } from '@/context/userContext';
+import { useRouter } from 'next/navigation'; // Corrigido para usar o import correto
+import React, { useContext, useEffect } from 'react';
 
 export default function LayoutUnAuthOnly({
   children,
-}: Readonly<{ children: React.ReactNode; }>) {
-  // const router = useRouter();
-  // const autorizado = false;
+}: Readonly<{ children: React.ReactNode }>) {
+  const router = useRouter();
+  const { authenticated } = useContext(UserContext);
 
-  // if (!autorizado) {
-  //   router.push("/");
-  //   return;
-  // }
+  useEffect(() => {
+    if (authenticated) {
+      router.push('/'); // Redireciona após a renderização
+    }
+  }, [authenticated, router]); // Dependências incluídas para evitar problemas
 
-  return (
-    <>
-      <h5>LayoutUnAuthOnly -- Adicionar validação se estiver logado, jogar para a tela principal</h5>
-      {children}
-    </>
-  );
+  if (authenticated) {
+    return null; // Enquanto redireciona, não renderiza nada
+  }
+
+  return <>{children}</>;
 }

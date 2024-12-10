@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import styles from './Navbar.module.css';
 import Logo from '../../assets/img/logo.png';
+import { UserContext } from '@/context/userContext';
 
 function Navbar() {
-  const authenticated = false;
+  const { authenticated } = useContext(UserContext);
 
   const logout = () => {
-    alert("logout");
+    alert('logout');
   };
 
   return (
@@ -26,15 +27,25 @@ function Navbar() {
         </li>
         {authenticated ? (
           <>
-            <li><Link href="/pet/myadoptions">Minhas Adoções</Link></li>
-            <li><Link href="/pet/mypets">Meus Pets</Link></li>
-            <li><Link href="/user/profile">Meu Perfil</Link></li>
+            <li>
+              <Link href="/pet/myadoptions">Minhas Adoções</Link>
+            </li>
+            <li>
+              <Link href="/pet/mypets">Meus Pets</Link>
+            </li>
+            <li>
+              <Link href="/user/profile">Meu Perfil</Link>
+            </li>
             <li onClick={logout}>Sair</li>
           </>
         ) : (
           <>
-            <li><Link href="/auth/login">Entrar</Link></li>
-            <li><Link href="/auth/register">Registrar</Link></li>
+            <li>
+              <Link href="/auth/login">Entrar</Link>
+            </li>
+            <li>
+              <Link href="/auth/register">Registrar</Link>
+            </li>
           </>
         )}
       </ul>
