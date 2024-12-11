@@ -9,7 +9,6 @@ export default function LayoutAuthOnly({
 }: Readonly<{ children: React.ReactNode }>) {
   const router = useRouter();
   const { authenticated } = useContext(UserContext);
-  console.log(authenticated);
 
   useEffect(() => {
     if (!authenticated) {

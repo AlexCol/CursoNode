@@ -1,10 +1,7 @@
 import { ReactNode } from 'react';
 import './index.css';
-import NavBar from '@/components/layout/NavBar';
-import Footer from '@/components/layout/Footer';
-import Container from '@/components/layout/Container';
 import { UserProvider } from '@/context/userContext';
-import Message from '@/components/layout/Message';
+import App from './App';
 
 export default function RootLayout({
   children,
@@ -19,10 +16,7 @@ export default function RootLayout({
       </head>
       <body className={`app`}>
         <UserProvider>
-          <NavBar />
-          <Message />
-          <Container>{children}</Container>
-          <Footer />
+          <App>{children}</App>
         </UserProvider>
       </body>
     </html>

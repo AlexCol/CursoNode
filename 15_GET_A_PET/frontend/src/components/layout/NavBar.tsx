@@ -9,11 +9,7 @@ import Logo from '../../assets/img/logo.png';
 import { UserContext } from '@/context/userContext';
 
 function Navbar() {
-  const { authenticated } = useContext(UserContext);
-
-  const logout = () => {
-    alert('logout');
-  };
+  const { authenticated, logout } = useContext(UserContext);
 
   return (
     <nav className={styles.navbar}>
