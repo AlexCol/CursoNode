@@ -79,6 +79,7 @@ export default function useAuth(): IUseAuth {
   function logout() {
     setAuthenticated(false);
     sessionStorage.removeItem('token');
+    api.defaults.headers.common['Authorization'] = ``;
     router.push('/');
   }
 
@@ -86,6 +87,7 @@ export default function useAuth(): IUseAuth {
   async function authUser(data: any) {
     setAuthenticated(true);
     sessionStorage.setItem('token', JSON.stringify(data.token));
+    api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
 
     router.push('/');
   }
