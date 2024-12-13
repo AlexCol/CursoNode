@@ -1,6 +1,8 @@
 import axios from "axios";
 
+const baseURL = process.env.NEXT_PUBLIC_API;
+
 export default axios.create({
-    baseURL: "http://localhost:5000",
-    withCredentials: true
+  baseURL,
+  withCredentials: true
 });

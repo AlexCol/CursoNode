@@ -22,7 +22,7 @@ interface User {
 
 function Profile() {
   const router = useRouter();
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState<File>();
   const [token] = useState(sessionStorage.getItem('token') || '');
   const [user, setUser] = useState<User>({
     _id: '',
@@ -61,18 +61,52 @@ function Profile() {
   }
 
   function onFileChange(e: ChangeEvent<HTMLInputElement>) {
-
+    if (!e.target.files) return;
+    setPreview(e.target.files[0]);
+    setUser({ ...user, [e.target.name]: e.target.files[0] });
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(user);
+    let msgType = 'success';
+    let msgText = 'Usuário atualizado com sucesso';
+
+    try {
+      const formData = new FormData();
+
+      Object.keys(user).forEach(key => {
+        formData.append(key, user[key as keyof User] as any);
+      });
+
+      await api.put('/users', formData); //lembrete: sem necessidade de mandar o token, pois ele é enviado automaticamente no header
+      router.push('/');
+    } catch (error) {
+      msgType = 'error';
+      msgText = 'Erro ao atualizar usuário';
+      if (error instanceof AxiosError) {
+        if (error.response?.data.Error) {
+          msgText = error.response?.data.Error;
+        }
+        if (error.response?.data.errors) {
+          msgText = error.response?.data.errors[0];
+        }
+      }
+    }
+    useFlashMessage().setFlashMessage(msgText, msgType);
   }
 
   return (
     <section>
       <div className={styles.profile_header}>
         <h1>Perfil</h1>
+        {(user.image || preview) && (
+          <img
+            src={preview
+              ? URL.createObjectURL(preview)
+              : `${process.env.NEXT_PUBLIC_API}/images/users/${user.image}`}
+            alt={user.name}
+          />
+        )}
       </div>
       <form onSubmit={handleSubmit} className={formStyles.form_container}>
         <Input
@@ -115,7 +149,7 @@ function Profile() {
         <Input
           text="Confirmação de senha"
           type="password"
-          name="confirmpassword"
+          name="confirmPassword"
           placeholder="Confirme a sua senha"
           handleOnChange={handleChange}
         />
