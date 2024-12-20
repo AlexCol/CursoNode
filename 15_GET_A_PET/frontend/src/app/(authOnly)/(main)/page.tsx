@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div className="Home">
-      "Hello, world!"
+      <h1>Pagina inicial</h1>
       <button onClick={() => setCounter((prevCounter) => prevCounter + 1)}>
         {counter}
       </button>

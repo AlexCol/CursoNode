@@ -8,17 +8,8 @@ import api from '@/utils/api';
 import { AxiosError } from 'axios';
 import useFlashMessage from '@/hooks/useFlashMessage';
 import { useRouter } from 'next/dist/client/components/navigation';
-
-/* hooks */
-
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  password?: string;
-  image?: string;
-  phone: string;
-}
+import RoundedImage from '@/components/layout/RoundedImage';
+import { User } from '@/interfaces/User';
 
 function Profile() {
   const router = useRouter();
@@ -100,11 +91,12 @@ function Profile() {
       <div className={styles.profile_header}>
         <h1>Perfil</h1>
         {(user.image || preview) && (
-          <img
+          <RoundedImage
             src={preview
               ? URL.createObjectURL(preview)
               : `${process.env.NEXT_PUBLIC_API}/images/users/${user.image}`}
             alt={user.name}
+            width="small"
           />
         )}
       </div>
