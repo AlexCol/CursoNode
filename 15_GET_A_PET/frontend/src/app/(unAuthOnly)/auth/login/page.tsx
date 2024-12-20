@@ -1,10 +1,10 @@
 'use client';
 
-import { UserContext } from "@/context/userContext";
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import styles from '../../../../components/form/Form.module.css';
 import Input from "@/components/form/Input";
 import Link from "next/link";
+import { UserContext } from "@/contexts/user/userContext";
 
 export default function Login() {
   const [user, setUser] = useState({ email: '', password: '' });

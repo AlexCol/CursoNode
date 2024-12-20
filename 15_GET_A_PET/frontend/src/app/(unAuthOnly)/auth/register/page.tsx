@@ -5,7 +5,7 @@ import styles from '../../../../components/form/Form.module.css';
 import Input from '../../../../components/form/Input';
 
 /* contexts */
-import { UserContext } from '@/context/userContext';
+import { UserContext } from '@/contexts/user/userContext';
 
 function Register() {
   const [user, setUser] = useState({})

@@ -1,6 +1,6 @@
 'use client';
 
-import { UserContext } from '@/context/userContext';
+import { UserContext } from '@/contexts/user/userContext';
 import { useRouter } from 'next/navigation'; // Corrigido o import
 import React, { useContext, useEffect } from 'react';
 

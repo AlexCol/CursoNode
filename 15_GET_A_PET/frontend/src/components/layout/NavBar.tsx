@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import styles from './Navbar.module.css';
 import Logo from '../../assets/img/logo.png';
-import { UserContext } from '@/context/userContext';
+import { UserContext } from '@/contexts/user/userContext';
 
 function Navbar() {
   const { authenticated, logout } = useContext(UserContext);

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import './index.css';
-import { UserProvider } from '@/context/userContext';
+
 import App from './App';
+import { UserProvider } from '@/contexts/user/userProvider';
 
 export default function RootLayout({
   children,
