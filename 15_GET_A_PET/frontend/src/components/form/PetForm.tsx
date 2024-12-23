@@ -7,27 +7,60 @@ import Input from './Input';
 import Select from './Select';
 
 interface PetFormProps {
-  handleSubmit?: (e: FormEvent<HTMLFormElement>) => void;
-  petData?: Pet;
+  handleSubmit: (pet: Pet) => void;
+  petData: Pet;
   btnText?: string;
 }
 
-function PetForm({ petData, btnText }: PetFormProps) {
+function PetForm({ handleSubmit, petData, btnText }: PetFormProps) {
   const [pet, setPet] = useState<Pet>(petData || {} as Pet);
-  const [preview, setPreview] = useState<string[]>([]);
+  const [preview, setPreview] = useState<File[]>([]);
   const colors = ['Branco', 'Preto', 'Cinza', 'Marrom', 'Laranja', 'Mesclado'];
 
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files) return;
+    setPreview(Array.from(files));
+    setPet({ ...pet, images: Array.from(files) });
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setPet({ ...pet, [name]: value });
   }
 
   function handleColor(e: React.ChangeEvent<HTMLSelectElement>) {
+    const choosedColor = e.target.options[e.target.selectedIndex].text;
+    setPet({ ...pet, color: choosedColor });
+  }
+
+  async function submitForm(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    await handleSubmit(pet);
   }
 
   return (
-    <form className={styles.form_container}>
+    <form onSubmit={submitForm} className={styles.form_container}>
+      <div className={styles.preview_pet_images}>
+        {preview.length > 0 ?
+          Array.from(preview).map((image, index) => (
+            <img
+              src={URL.createObjectURL(image)}
+              alt={pet.name}
+              key={`${pet.name}+${index}`}
+            />
+          ))
+          :
+          petData.images &&
+          Array.from(petData.images).map((image, index) => (
+            <img
+              key={index}
+              src={`${process.env.REACT_APP_API_URL}/images/pets/${image}`}
+              alt='Imagem do Pet'
+            />
+          ))
+        }
+      </div>
       <Input
         text='Imagens do Pet'
         type='file'

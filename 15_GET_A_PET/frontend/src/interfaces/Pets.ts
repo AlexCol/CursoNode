@@ -4,7 +4,7 @@ export interface Pet {
   age: number;
   weight: number;
   color: string;
-  image?: string[];
+  images?: File[];
   available: boolean;
   user: string;
   adopter?: string;
