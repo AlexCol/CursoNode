@@ -4,7 +4,7 @@
   border-radius: 100%;
 }
 
-.rounded_image.px75 {
-  width: 75px;
-  height: 75px;
+.px75 {
+  width: 75px !important;
+  height: 75px !important;
 }

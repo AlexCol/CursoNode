@@ -9,7 +9,7 @@ interface RoundedImageProps {
 
 function RoundedImage({ src, alt, width }: RoundedImageProps) {
   return (
-    <img className={`${styles.rounded_image} ${width ? styles[width] : ''}`}
+    <img className={`${styles['rounded_image']} ${width ? styles[width] : ''}`}
       src={src}
       alt={alt}
     />
