@@ -119,7 +119,7 @@ petsController.put('/:id', imageUpload.array("images"), async (req: Request, res
   if (color) pet.color = color;
   if (available) pet.available = available;
 
-  if (images.length > 0) {
+  if (images && images.length > 0) {
     images.map((image: Express.Multer.File) => {
       pet.images.push(image.filename);
     });

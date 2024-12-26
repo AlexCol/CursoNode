@@ -32,7 +32,7 @@ function AddPet() {
 
     try {
       await api.post('/pets', formData); //lembrete: sem necessidade de mandar o token, pois ele é enviado automaticamente no header (cadastrado no useAuth)
-      router.push('/');
+      router.push('/pet/my-pets');
     } catch (error) {
       msgType = 'error';
       msgText = 'Erro ao atualizar usuário';

@@ -28,6 +28,21 @@ function MyPets() {
     fetchPets();
   }, []);
 
+  async function removePet(id: string) {
+    let msgType = 'success';
+    let msg = 'Pet excluído com sucesso!';
+    try {
+      await api.delete(`/pets/${id}`);
+      const updatedPets = pets.filter((pet) => pet._id !== id);
+      setPets(updatedPets);
+    } catch (error) {
+      msgType = 'error';
+      const errorMsg = error instanceof Error ? error.message : error;
+      msg = `Erro ao excluir pet: ${errorMsg}.`;
+    }
+    setFlashMessage(msg, msgType);
+  }
+
   return (
     <section>
       <div className={styles.petslist_header}>
@@ -50,7 +65,10 @@ function MyPets() {
                     <>
                       {pet.adopter && <button className={styles.conclude_btn}>Concluir adoção</button>}
                       <Link href={`/pet/edit/${pet._id}`}>Editar</Link>
-                      <button>Excluir</button>
+                      <button
+                        className={styles.btnExcluir}
+                        onClick={async () => await removePet(pet._id)}
+                      >Excluir</button>
                     </>
                   ) : (
                     <p>Pet já adotado!</p>

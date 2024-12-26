@@ -55,7 +55,7 @@ function PetForm({ handleSubmit, petData, btnText }: PetFormProps) {
           Array.from(petData.images).map((image, index) => (
             <img
               key={index}
-              src={`${process.env.REACT_APP_API_URL}/images/pets/${image}`}
+              src={`${process.env.NEXT_PUBLIC_API}/images/pets/${image}`}
               alt='Imagem do Pet'
             />
           ))
@@ -73,7 +73,7 @@ function PetForm({ handleSubmit, petData, btnText }: PetFormProps) {
         type='text'
         name='name'
         placeholder='Nome do Pet'
-        value={pet.name || ''}
+        value={pet.name}
         handleOnChange={handleChange}
       />
       <Input

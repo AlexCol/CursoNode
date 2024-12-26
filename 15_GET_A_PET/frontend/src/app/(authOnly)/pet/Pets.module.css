@@ -72,6 +72,11 @@
   color: #fff;
 }
 
+.btnExcluir:hover {
+  background-color: red !important;
+  border: 2px solid red !important;
+}
+
 .actions .conclude_btn {
   color: #25b456;
   border-color: #25b456;
