@@ -3,10 +3,11 @@
 import React, { use, useEffect, useState } from 'react';
 import styles from '../../add/AddPet.module.css';
 import { Pet } from '@/interfaces/Pets';
-import { useParams, useRouter } from 'next/dist/client/components/navigation';
+
 import api from '@/utils/api';
 import PetForm from '@/components/form/PetForm';
 import useFlashMessage from '@/hooks/useFlashMessage';
+import { useParams, useRouter } from 'next/navigation';
 
 function EditPet() {
   const [pet, setPet] = useState<Pet>({} as Pet);
