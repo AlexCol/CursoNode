@@ -1,6 +1,6 @@
 
 function addDotEnv(): void {
-    require('dotenv').config();
+  require('dotenv').config();
 }
 
 export default addDotEnv;

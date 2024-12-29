@@ -13,7 +13,7 @@ interface PetFormProps {
 }
 
 function PetForm({ handleSubmit, petData, btnText }: PetFormProps) {
-  const [pet, setPet] = useState<Pet>(petData || {} as Pet);
+  const [pet, setPet] = useState<Pet>(petData || { name: '' } as Pet);
   const [preview, setPreview] = useState<File[]>([]);
   const colors = ['Branco', 'Preto', 'Cinza', 'Marrom', 'Laranja', 'Mesclado'];
 
@@ -73,7 +73,7 @@ function PetForm({ handleSubmit, petData, btnText }: PetFormProps) {
         type='text'
         name='name'
         placeholder='Nome do Pet'
-        value={pet.name}
+        value={pet.name || ''}
         handleOnChange={handleChange}
       />
       <Input
