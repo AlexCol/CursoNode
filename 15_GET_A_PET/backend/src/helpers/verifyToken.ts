@@ -4,7 +4,6 @@ import { IJWTClaims } from "./createUserToken";
 import { getToken } from "./getToken";
 
 function verifyToken(req: Request, res: Response, next: NextFunction) {
-  console.log(req.url);
   const token = getToken(req);
   if (!token) {
     res.status(401).send('Access Denied');

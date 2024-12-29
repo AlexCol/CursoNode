@@ -9,7 +9,7 @@ import User from "../models/User";
 
 const petsController = Router();
 
-petsController.use(verifyToken); //todas as rotas do controller são protegidas
+//petsController.use(verifyToken); //todas as rotas do controller são protegidas
 
 petsController.get('/', async (req: Request, res: Response) => {
   try {
@@ -20,7 +20,7 @@ petsController.get('/', async (req: Request, res: Response) => {
   }
 });
 
-petsController.get('/mypets', async (req: Request, res: Response) => {
+petsController.get('/mypets', verifyToken, async (req: Request, res: Response) => {
   const userId = req.user.id;
 
   try {
@@ -31,7 +31,7 @@ petsController.get('/mypets', async (req: Request, res: Response) => {
   }
 });
 
-petsController.get('/myadoptions', async (req: Request, res: Response) => {
+petsController.get('/myadoptions', verifyToken, async (req: Request, res: Response) => {
   const userId = req.user.id;
 
   try {
@@ -61,7 +61,7 @@ petsController.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-petsController.delete('/:id', async (req: Request, res: Response) => {
+petsController.delete('/:id', verifyToken, async (req: Request, res: Response) => {
   const petId = req.params.id;
   if (!isObjectIdOrHexString(petId)) {
     res.status(400).json({ Error: 'Invalid ID' });
@@ -90,7 +90,7 @@ petsController.delete('/:id', async (req: Request, res: Response) => {
 
 });
 
-petsController.put('/:id', imageUpload.array("images"), async (req: Request, res: Response) => {
+petsController.put('/:id', verifyToken, imageUpload.array("images"), async (req: Request, res: Response) => {
   const petId = req.params.id;
   const { name, age, weight, color, available } = req.body;
   const images = req.files as Express.Multer.File[];
@@ -135,7 +135,7 @@ petsController.put('/:id', imageUpload.array("images"), async (req: Request, res
   }
 });
 
-petsController.post('/', imageUpload.array("images"), async (req: Request, res: Response) => {
+petsController.post('/', verifyToken, imageUpload.array("images"), async (req: Request, res: Response) => {
   const { name, age, weight, color } = req.body;
   const images = req.files as Express.Multer.File[];
 
@@ -181,7 +181,7 @@ petsController.post('/', imageUpload.array("images"), async (req: Request, res: 
   }
 });
 
-petsController.patch('/schedule/:id', async (req: Request, res: Response) => {
+petsController.patch('/schedule/:id', verifyToken, async (req: Request, res: Response) => {
   const petId = req.params.id;
 
   if (!isObjectIdOrHexString(petId)) {
@@ -219,7 +219,7 @@ petsController.patch('/schedule/:id', async (req: Request, res: Response) => {
   }
 });
 
-petsController.patch('/concludeadoption/:id', async (req: Request, res: Response) => {
+petsController.patch('/concludeadoption/:id', verifyToken, async (req: Request, res: Response) => {
 
   const petId = req.params.id;
 

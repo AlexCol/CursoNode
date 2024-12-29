@@ -7,6 +7,7 @@ import { Pet } from '@/interfaces/Pets';
 import useFlashMessage from '@/hooks/useFlashMessage';
 import api from '@/utils/api';
 import { UserContext } from '@/contexts/user/userContext';
+import Link from 'next/link';
 
 function PetDetails() {
   const { id } = useParams();
@@ -30,12 +31,12 @@ function PetDetails() {
   return (
     <>
       {pet.name && (
-        <section>
-          <div>
+        <section className={syles.pet_details_container}>
+          <div className={syles.petdetails_header}>
             <h1>Conhecendo o Pet: {pet.name}</h1>
             <p>Se tiver interesse, marque uma visita para conhecê-lo.</p>
           </div>
-          <div>
+          <div className={syles.pet_images}>
             {pet.images?.map((image, index) => (
               <img
                 key={index}
@@ -52,9 +53,11 @@ function PetDetails() {
           </p>
 
           {authenticated ? (
-            <button className={syles['btn-adopt']}>Adotar</button>
+            <button>Solicitar uma visita</button>
           ) : (
-            <p>Para adotar, faça login</p>
+            <p>
+              Você precisa <Link href='/auth/login'>logar</Link> para solicitar a visita.
+            </p>
           )}
         </section>
       )}
