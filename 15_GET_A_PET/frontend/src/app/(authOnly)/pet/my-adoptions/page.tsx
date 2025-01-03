@@ -13,25 +13,22 @@ function MyAdoptions() {
   const [pets, setPets] = useState<Pet[]>([]);
   const [owners, setOwners] = useState<User[]>([]);
 
-  function getOwnerData(ownerId: string) {
-    const ownerData = owners.find((owner) => owner._id === ownerId);
-    return ownerData;
+  function getOwnerData(ownerId: string): User {
+    const ownerData = owners.find((owner: User) => {
+      console.log('owner._id', owner._id);
+      console.log('ownerId', ownerId);
+      return owner._id === ownerId
+    });
+    return ownerData || { name: 'Não encontrado', phone: 'Não encontrado' } as User;
   }
 
   useEffect(() => {
     async function FecthAdoptions() {
-      let searchedOwners: User[] = [];
+      let searchedPets: Pet[] = [];
       try {
         const response = await api.get(`/pets/myadoptions`); //lembrete: já tem um Bearer token no header (anexado no useAuth)
-        setPets(response.data);
-        console.log(response.data);
-
-        const uniqueValuesOfOwners = Array.from(new Set(pets.map((pet) => pet.user)));
-        uniqueValuesOfOwners.map(async (ownerId) => {
-          const response = await api.get(`/users/${ownerId}`);
-          owners.push(response.data);
-        });
-        setOwners(searchedOwners);
+        searchedPets = response.data;
+        setPets(searchedPets);
       } catch (error) {
         useFlashMessage().setFlashMessage(`Erro ao carregar Adoções: ${error}`, 'error');
         setPets([]);
@@ -39,6 +36,24 @@ function MyAdoptions() {
     }
     FecthAdoptions();
   }, []);
+
+  useEffect(() => {
+    async function FetchOwners() {
+      const uniqueValuesOfOwners = Array.from(new Set(pets.map((pet) => pet.user)));
+      uniqueValuesOfOwners.map(async (ownerId) => {
+        const response = await api.get(`/users/${ownerId}`);
+        const user: User = response.data.user;
+        setOwners((owners) => {
+          if (owners.find((owner) => owner._id === user._id)) {
+            return owners;
+          }
+          return [...owners, user];
+        });
+      });
+    }
+    if (pets)
+      FetchOwners();
+  }, [pets]);
 
   return (
     <section>
@@ -55,6 +70,14 @@ function MyAdoptions() {
                 width='px75'
               />
               <span className='bold'>{pet.name}</span>
+              <div className={styles.contacts}>
+                <p>
+                  <span className="bold">Ligue para:</span> {getOwnerData(pet.user)?.phone}
+                </p>
+                <p>
+                  <span className="bold">Fale com:</span> {getOwnerData(pet.user)?.name}
+                </p>
+              </div>
               <div className={styles.actions}>
                 {pet.available ? (
                   <>

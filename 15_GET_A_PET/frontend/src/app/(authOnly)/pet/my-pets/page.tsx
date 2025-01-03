@@ -43,6 +43,26 @@ function MyPets() {
     setFlashMessage(msg, msgType);
   }
 
+  async function concludeAdoption(petId: string) {
+    let msgType = 'success';
+    let msgText = 'Adoção concluída com sucesso!';
+    try {
+      await api.patch(`/pets/concludeadoption/${petId}`);
+      const updatedPets = pets.map((pet) => {
+        if (pet._id === petId) {
+          pet.available = false;
+        }
+        return pet;
+      });
+      setPets(updatedPets);
+    } catch (error) {
+      msgType = 'error';
+      const errorMsg = error instanceof Error ? error.message : error;
+      msgText = `Erro ao concluir adoção: ${errorMsg}`;
+    }
+    setFlashMessage(msgText, msgType);
+  }
+
   return (
     <section>
       <div className={styles.petslist_header}>
@@ -63,8 +83,15 @@ function MyPets() {
                 <div className={styles.actions}>
                   {pet.available ? (
                     <>
-                      {pet.adopter && <button className={styles.conclude_btn}>Concluir adoção</button>}
-                      <Link href={`/pet/edit/${pet._id}`}>Editar</Link>
+                      {pet.adopter &&
+                        <button
+                          className={styles.conclude_btn}
+                          onClick={async () => await concludeAdoption(pet._id)}
+                        >Concluir adoção</button>
+                      }
+                      <Link
+                        href={`/pet/edit/${pet._id}`}
+                      >Editar</Link>
                       <button
                         className={styles.btnExcluir}
                         onClick={async () => await removePet(pet._id)}
