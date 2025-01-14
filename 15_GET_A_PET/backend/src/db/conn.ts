@@ -4,7 +4,7 @@ import logger from '../middleware/global/logger/logger';
 async function connectToDatabase() {
   try {
     logger.info('Attempting to connect to MongoDB...');
-    await mongoose.connect('mongodb://localhost:27017/getapet', {
+    await mongoose.connect('mongodb://127.0.0.1:27017/getapet', {
       maxPoolSize: 10,           // Limite de conexões simultâneas
       wtimeoutMS: 2500,          // Tempo máximo para operações de gravação
       connectTimeoutMS: 30000,   // Tempo máximo para tentativa de conexão
